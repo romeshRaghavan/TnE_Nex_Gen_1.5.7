@@ -604,13 +604,15 @@ function synchronizeBEMasterData() {
 	jsonSentToSync["GradeId"] = window.localStorage.getItem("GradeID");
 	jsonSentToSync["UnitId"] = window.localStorage.getItem("UnitId");
 	var userName =window.localStorage.getItem("UserName");
-	var check = userName.includes(companyName);
+ 	var domainName = userName.split('@')[1];
+	var check = domainName.includes(companyName);
 	if(check){
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonSentToSync);
-     dencc = getEncryptionValue(tempJSON);
+	 var token = generateToken();
+     dencc = getNewValueDefine(tempJSON,token);
      jsonSentToSync = new Object();
-     jsonSentToSync["dencc"] = dencc;
+     jsonSentToSync["dencc"] = dencc+"$"+token;
  	}
 	j('#loading_Cat').show();
 	if (mydb) {
@@ -796,13 +798,15 @@ function synchronizeBEMasterData() {
 	jsonSentToSync["GradeId"] = window.localStorage.getItem("GradeID");
 	jsonSentToSync["UnitId"] = window.localStorage.getItem("UnitId");
 	var userName =window.localStorage.getItem("UserName");
-	var check = userName.includes(companyName);
+ 	var domainName = userName.split('@')[1];
+	var check = domainName.includes(companyName);
 	if(check){
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonSentToSync);
-     dencc = getEncryptionValue(tempJSON);
+	 var token = generateToken();
+     dencc = getNewValueDefine(tempJSON,token);
      jsonSentToSync = new Object();
-     jsonSentToSync["dencc"] = dencc;
+     jsonSentToSync["dencc"] = dencc+"$"+token;
  }
 		if (mydb) {
 		j.ajax({
@@ -1486,14 +1490,16 @@ function synchronizeTRForTS() {
 	var jsonSentToSync=new Object();
 	jsonSentToSync["EmployeeId"] = window.localStorage.getItem("EmployeeId");
 	var userName =window.localStorage.getItem("UserName");
-	var check = userName.includes(companyName);
+	var domainName = userName.split('@')[1];
+	var check = userName.includes(domainName);
 	if(check){
 	var dencc = "";
 	var tempJSON = JSON.stringify(jsonSentToSync);
-    dencc = getEncryptionValue(tempJSON);
+	var token = generateToken();
+    dencc = getNewValueDefine(tempJSON,token);
     jsonSentToSync = new Object();
-    jsonSentToSync["dencc"] = dencc;
-	}
+    jsonSentToSync["dencc"] = dencc+"$"+token;
+  	}
 	j('#loading_Cat').show();
 	if (mydb) {
  		j.ajax({
@@ -1623,14 +1629,16 @@ function synchronizeEAMasterData() {
 	jsonSentToSync["GradeId"] = window.localStorage.getItem("GradeID");
 	jsonSentToSync["UnitId"] = window.localStorage.getItem("UnitId");
 	var userName =window.localStorage.getItem("UserName");
-	var check = userName.includes(companyName);
+	var domainName = userName.split('@')[1];
+	var check = domainName.includes(companyName);
 
 	if(check){
 	var dencc = "";
 	var tempJSON = JSON.stringify(jsonSentToSync);
-    dencc = getEncryptionValue(tempJSON);
+	var token = generateToken();
+    dencc = getNewValueDefine(tempJSON,token);
     jsonSentToSync = new Object();
-    jsonSentToSync["dencc"] = dencc;
+    jsonSentToSync["dencc"] = dencc+"$"+token;
 	}
 	j('#loading_Cat').show();
 	if (mydb) {

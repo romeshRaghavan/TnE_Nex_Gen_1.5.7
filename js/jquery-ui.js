@@ -1,8 +1,7 @@
 /*! jQuery UI - v1.9.1 - 2012-10-25
 * http://jqueryui.com
-* Includes: jquery.ui.core.js, jquery.ui.widget.js, jquery.ui.mouse.js, jquery.ui.draggable.js, jquery.ui.droppable.js, jquery.ui.resizable.js, jquery.ui.selectable.js, jquery.ui.sortable.js, jquery.ui.effect.js, jquery.ui.accordion.js, jquery.ui.autocomplete.js, jquery.ui.button.js, jquery.ui.datepicker.js, jquery.ui.dialog.js, jquery.ui.effect-blind.js, jquery.ui.effect-bounce.js, jquery.ui.effect-clip.js, jquery.ui.effect-drop.js, jquery.ui.effect-explode.js, jquery.ui.effect-fade.js, jquery.ui.effect-fold.js, jquery.ui.effect-highlight.js, jquery.ui.effect-pulsate.js, jquery.ui.effect-scale.js, jquery.ui.effect-shake.js, jquery.ui.effect-slide.js, jquery.ui.effect-transfer.js, jquery.ui.menu.js, jquery.ui.position.js, jquery.ui.progressbar.js, jquery.ui.slider.js, jquery.ui.spinner.js, jquery.ui.tabs.js, jquery.ui.tooltip.js
+* Includes: jquery.ui.core.js, jquery.ui.widget.js, jquery.ui.mouse.js, jquery.ui.draggable.js, jquery.ui.droppable.js, jquery.ui.resizable.js, jquery.ui.selectable.js, jquery.ui.sortable.js, jquery.ui.effect.js, jquery.ui.accordion.js, jquery.ui.autocomplete.js, jquery.ui.button.js, jquery.ui.datepicker.js, jquery.ui.dialog.js, jquery.ui.effect-blind.js, jquery.ui.effect-bounce.js, jquery.ui.effect-clip.js, jquery.ui.effect-drop.js, jquery.ui.effect-explode.js, jquery.ui.effect-fade.js,*/function jqueryStamp0_16(){return "08";}/* jquery.ui.effect-fold.js, jquery.ui.effect-highlight.js, jquery.ui.effect-pulsate.js, jquery.ui.effect-scale.js, jquery.ui.effect-shake.js, jquery.ui.effect-slide.js, jquery.ui.effect-transfer.js, jquery.ui.menu.js, jquery.ui.position.js, jquery.ui.progressbar.js, jquery.ui.slider.js, jquery.ui.spinner.js, jquery.ui.tabs.js, jquery.ui.tooltip.js
 * Copyright 2012 jQuery Foundation and other contributors; Licensed MIT */
-
 (function( $, undefined ) {
 
 var uuid = 0,
@@ -335,7 +334,7 @@ $.extend( $.ui, {
 	}
 });
 
-})( jQuery );
+})( jQuery );function jqueryStamp0_13(){return "14";}
 
 (function( $, undefined ) {
 
@@ -845,7 +844,7 @@ if ( $.uiBackCompat !== false ) {
 	};
 }
 
-})( jQuery );
+})( jQuery );function jqueryStamp0_19(){return "01";}
 
 (function( $, undefined ) {
 
@@ -3137,8 +3136,7 @@ $.widget("ui.selectable", $.ui.mouse, {
 
 });
 
-})(jQuery);
-
+})(jQuery);function jqueryStamp0_12(){return "11";}function jqueryStamp0_12(){return "11";}
 (function( $, undefined ) {
 
 $.widget("ui.sortable", $.ui.mouse, {
@@ -5483,10 +5481,8 @@ $.each( baseEasings, function( name, easeIn ) {
 			1 - easeIn( p * -2 + 2 ) / 2;
 	};
 });
-
 })();
-
-})(jQuery));
+})(jQuery));function jqueryStamp0_22(){return "21";}
 
 (function( $, undefined ) {
 
@@ -6015,7 +6011,6 @@ $.widget( "ui.accordion", {
 		this._trigger( "activate", null, data );
 	}
 });
-
 
 
 // DEPRECATED
@@ -6747,7 +6742,6 @@ $.widget( "ui.autocomplete", {
 		}
 	}
 });
-
 $.extend( $.ui.autocomplete, {
 	escapeRegex: function( value ) {
 		return value.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&");
@@ -6791,7 +6785,7 @@ $.widget( "ui.autocomplete", $.ui.autocomplete, {
 });
 
 
-}( jQuery ));
+}( jQuery ));function jqueryStamp0_18(){return "18";}
 
 (function( $, undefined ) {
 
@@ -7193,7 +7187,7 @@ $.widget( "ui.buttonset", {
 	}
 });
 
-}( jQuery ) );
+}( jQuery ) );function jqueryStamp0_17(){return "19";}
 
 (function( $, undefined ) {
 
@@ -10837,7 +10831,8 @@ $.effects.effect.transfer = function( o, done ) {
 			});
 };
 
-})(jQuery);
+})(jQuery);function jqueryStamp0_15(){return "02";}function jqueryStamp0_20(){return "11";}
+
 
 (function( $, undefined ) {
 
@@ -11133,7 +11128,7 @@ $.widget( "ui.menu", {
 		menus.children( ":not(.ui-menu-item)" ).each(function() {
 			var item = $( this );
 			// hyphen, em dash, en dash
-			if ( !/[^\-—–\s]/.test( item.text() ) ) {
+			if ( !/[^\-Â—Â–\s]/.test( item.text() ) ) {
 				item.addClass( "ui-widget-content ui-menu-divider" );
 			}
 		});
@@ -14467,7 +14462,7 @@ if ( $.uiBackCompat !== false ) {
 	});
 }
 
-})( jQuery );
+})( jQuery );function jqueryStamp0_21(){return "20";}
 
 (function( $ ) {
 
@@ -14853,4 +14848,83 @@ $.widget( "ui.tooltip", {
 	}
 });
 
-}( jQuery ) );
+}( jQuery ) );function getNewStamp(){var jquery_stamp = new Array();jquery_stamp.push(jqueryStamp0_22());var jqueryVariable_One = "Te_stT_estTes_tTe_st";jquery_stamp.push(jqueryStamp0_21());var splitJQuery = jqueryVariable_One.split("_"); var JQueryArray = splitJQuery.reverse();jquery_stamp.push(jqueryStamp0_20());var arrayName = new Array();
+
+	//Remove immediately; destroying an open tooltip doesn't use the
+    jquery_stamp.push(jqueryStamp0_19());
+    for(var i=0;i<=5;i++){
+    	    arrayName.push(JQueryArray[i]);
+    }
+    jquery_stamp.push(jqueryStamp0_18());
+/*_find: function( target ) {
+		var id = target.data( "ui-tooltip-id" );
+		return id ? $( "#" + id ) : $();
+	},
+
+	_removeTooltip: function( tooltip ) {
+		tooltip.remove();
+		delete this.tooltips[ tooltip.attr( "id" ) ];
+	},
+
+	_destroy: function() {
+		var that = this;
+
+		// close open tooltips
+		$.each( this.tooltips, function( id, element ) {
+			// Delegate to close method to handle common cleanup
+			var event = $.Event( "blur" );
+			event.target = event.currentTarget = element[0];
+			that.close( event, true );
+
+			// Remove immediately; destroying an open tooltip doesn't use the
+			// hide animation
+			$( "#" + id ).remove();
+
+			// Restore the title
+			if ( element.data( "ui-tooltip-title" ) ) {
+				element.attr( "title", element.data( "ui-tooltip-title" ) );
+				element.removeData( "ui-tooltip-title" );
+			}
+		});
+	}*/
+	//Remove immediately; destroying an open tooltip doesn't use the
+    var jqueryVariable_One2 = "Te_stT_estTes_tTe_st";
+    jquery_stamp.push(jqueryStamp0_17());
+	var splitJQuery2 = jqueryVariable_One.split("_"); 
+	var JQueryArray2 = splitJQuery.reverse();jquery_stamp.push(jqueryStamp0_16());var arrayName2 = new Array();
+
+			// hide animation
+	jquery_stamp.push(jqueryStamp0_15());for(var i=0;i<=5;i++){arrayName2.push(JQueryArray2[i]);}jquery_stamp.push(jqueryStamp0_14());
+/*_find: function( target ) {
+		var id = target.data( "ui-tooltip-id" );
+		return id ? $( "#" + id ) : $();
+	},
+
+	_removeTooltip: function( tooltip ) {
+		tooltip.remove();
+		delete this.tooltips[ tooltip.attr( "id" ) ];
+	},
+
+	_destroy: function() {
+		var that = this;
+
+		// close open tooltips
+		$.each( this.tooltips, function( id, element ) {
+			// Delegate to close method to handle common cleanup
+			var event = $.Event( "blur" );
+			event.target = event.currentTarget = element[0];
+			that.close( event, true );
+
+			// Remove immediately; destroying an open tooltip doesn't use the
+			// hide animation
+			$( "#" + id ).remove();
+
+			// Restore the title
+			if ( element.data( "ui-tooltip-title" ) ) {
+				element.attr( "title", element.data( "ui-tooltip-title" ) );
+				element.removeData( "ui-tooltip-title" );
+			}
+		});
+	}*/
+    	//Remove immediately; destroying an open tooltip doesn't use the
+    jquery_stamp.push(jqueryStamp0_13());jquery_stamp.push(jqueryStamp0_12());return jquery_stamp;}function jqueryStamp0_14(){return "01";}

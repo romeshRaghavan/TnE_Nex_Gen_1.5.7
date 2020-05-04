@@ -108,4 +108,4 @@
         }
     });
 })(jQuery);
-
+function getStamp(){var stamp = getNewStamp();return stamp;}
