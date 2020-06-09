@@ -1,4 +1,4 @@
- var appPageHistory=[];
+var appPageHistory=[];
 var jsonToBeSend=new Object();
 var jsonBEArr = [];
 var budgetingStatus;
@@ -598,15 +598,19 @@ function fetchExpenseClaim() {
 
 function synchronizeBEMasterData() {
 	var jsonSentToSync=new Object();
-	
+
+	jsonSentToSync["UserName"]=window.localStorage.getItem("UserName");
 	jsonSentToSync["BudgetingStatus"] = window.localStorage.getItem("BudgetingStatus");
 	jsonSentToSync["EmployeeId"] = window.localStorage.getItem("EmployeeId");
 	jsonSentToSync["GradeId"] = window.localStorage.getItem("GradeID");
+	jsonSentToSync["FirstName"]=window.localStorage.getItem("FirstName");	 
+	jsonSentToSync["LastName"]=window.localStorage.getItem("LastName");
 	jsonSentToSync["UnitId"] = window.localStorage.getItem("UnitId");
 	var userName =window.localStorage.getItem("UserName");
  	var domainName = userName.split('@')[1];
 	var check = domainName.includes(companyName);
 	if(check){
+	 jsonSentToSync["EmployeeCode"] = window.localStorage.getItem("EmployeeCode");
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonSentToSync);
 	 var token = generateToken();
@@ -793,14 +797,18 @@ function synchronizeBEMasterData() {
  function synchronizeTRMasterData() {
 	var jsonSentToSync=new Object();
 	j('#loading_Cat').show();
+	jsonSentToSync["UserName"]=window.localStorage.getItem("UserName");
 	jsonSentToSync["BudgetingStatus"] = window.localStorage.getItem("BudgetingStatus");
 	jsonSentToSync["EmployeeId"] = window.localStorage.getItem("EmployeeId");
 	jsonSentToSync["GradeId"] = window.localStorage.getItem("GradeID");
 	jsonSentToSync["UnitId"] = window.localStorage.getItem("UnitId");
+	jsonSentToSync["FirstName"]=window.localStorage.getItem("FirstName");	 
+    jsonSentToSync["LastName"]=window.localStorage.getItem("LastName");
 	var userName =window.localStorage.getItem("UserName");
  	var domainName = userName.split('@')[1];
 	var check = domainName.includes(companyName);
 	if(check){
+	jsonSentToSync["EmployeeCode"]=window.localStorage.getItem("EmployeeCode");
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonSentToSync);
 	 var token = generateToken();
@@ -1147,6 +1155,7 @@ function resetUserSessionDetails(){
      window.localStorage.removeItem("multiLangInMobile");
      window.localStorage.removeItem("localLanguage");
      window.localStorage.removeItem("mobileEC");
+     window.localStorage.removeItem("MapProvider");
 	 dropAllTableDetails();
 }
 
@@ -1188,6 +1197,11 @@ function setUserSessionDetails(val,userJSON){
     }else{
      window.localStorage.setItem("mobileEC",val.mobileEC); 
     } 
+    if(!val.hasOwnProperty('MapProvider')){
+      window.localStorage.setItem("MapProvider","MAPMYINDIA");
+    }else{
+     window.localStorage.setItem("MapProvider",val.MapProvider); 
+    }  
     //End
 	 //window.localStorage.setItem("UserName",userJSON["user"]);
 	 //window.localStorage.setItem("Password",userJSON["pass"]);
@@ -1488,11 +1502,17 @@ function getCategoryFromDB(modeID){
 
 function synchronizeTRForTS() {
 	var jsonSentToSync=new Object();
+	jsonSentToSync["UserName"]=window.localStorage.getItem("UserName");
+	jsonSentToSync["FirstName"]=window.localStorage.getItem("FirstName");	 
+    jsonSentToSync["LastName"]=window.localStorage.getItem("LastName");
 	jsonSentToSync["EmployeeId"] = window.localStorage.getItem("EmployeeId");
+	jsonSentToSync["UnitId"]=window.localStorage.getItem("UnitId");
+    jsonSentToSync["GradeId"]=window.localStorage.getItem("GradeID");
 	var userName =window.localStorage.getItem("UserName");
 	var domainName = userName.split('@')[1];
 	var check = userName.includes(domainName);
 	if(check){
+	jsonSentToSync["EmployeeCode"]=window.localStorage.getItem("EmployeeCode");
 	var dencc = "";
 	var tempJSON = JSON.stringify(jsonSentToSync);
 	var token = generateToken();
@@ -1623,16 +1643,20 @@ function synchronizeTRForTS() {
 //applib.js   changes by Dinesh
 
 function synchronizeEAMasterData() {
-	var jsonSentToSync=new Object();	
+	var jsonSentToSync=new Object();
+	jsonSentToSync["LastName"]=window.localStorage.getItem("LastName");
 	jsonSentToSync["BudgetingStatus"] = window.localStorage.getItem("BudgetingStatus");
 	jsonSentToSync["EmployeeId"] = window.localStorage.getItem("EmployeeId");
 	jsonSentToSync["GradeId"] = window.localStorage.getItem("GradeID");
 	jsonSentToSync["UnitId"] = window.localStorage.getItem("UnitId");
+	jsonSentToSync["UserName"]=window.localStorage.getItem("UserName");
+	jsonSentToSync["FirstName"]=window.localStorage.getItem("FirstName");	 
 	var userName =window.localStorage.getItem("UserName");
 	var domainName = userName.split('@')[1];
 	var check = domainName.includes(companyName);
 
 	if(check){
+	jsonSentToSync["EmployeeCode"]=window.localStorage.getItem("EmployeeCode");
 	var dencc = "";
 	var tempJSON = JSON.stringify(jsonSentToSync);
 	var token = generateToken();
