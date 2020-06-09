@@ -1169,6 +1169,7 @@ function setUserSessionDetails(val,userJSON){
 	 window.localStorage.setItem("BudgetingStatus",val.BudgetingStatus);
 	 window.localStorage.setItem("UnitId",val.UnitId);
 	 //window.localStorage.setItem("mobileEC",val.mobileEC);
+	window.localStorage.setItem("MapProvider", val.MapProvider);
 	 //For Mobile Google Map Role Start
 	 //End
      if(!val.hasOwnProperty('MobileMapRole')){
@@ -1197,11 +1198,11 @@ function setUserSessionDetails(val,userJSON){
     }else{
      window.localStorage.setItem("mobileEC",val.mobileEC); 
     } 
-    if(!val.hasOwnProperty('MapProvider')){
+    /*if(!val.hasOwnProperty('MapProvider')){
       window.localStorage.setItem("MapProvider","MAPMYINDIA");
     }else{
      window.localStorage.setItem("MapProvider",val.MapProvider); 
-    }  
+    }*/
     //End
 	 //window.localStorage.setItem("UserName",userJSON["user"]);
 	 //window.localStorage.setItem("Password",userJSON["pass"]);
