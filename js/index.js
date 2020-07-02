@@ -6,8 +6,8 @@ var companyName = "utkarsh";
 //var WebServicePath ='http://1.255.255.184:8085/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath ='http://1.255.255.36:9898/NexstepWebService/mobileLinkResolver.service';
-//var WebServicePath ='http://1.255.255.143:8081/NexstepWebService/mobileLinkResolver.service';
-var WebServicePath = 'https://appservices.expenzing.com/NexstepWebService/mobileLinkResolver.service';
+var WebServicePath ='http://1.255.255.143:8081/NexstepWebService/mobileLinkResolver.service';
+//var WebServicePath = 'https://appservices.expenzing.com/NexstepWebService/mobileLinkResolver.service';
 var clickedFlagCar = false;
 var clickedFlagTicket = false;
 var clickedFlagHotel = false;
@@ -75,7 +75,7 @@ function login()
          data: JSON.stringify(jsonToBeSend),
          success: function(data) {
          	if (data.Status == 'Success'){
-                
+
                 if(data.hasOwnProperty('multiLangInMobile') && data.multiLangInMobile != null &&
                    data.multiLangInMobile){
                        	var headerBackBtn=defaultPagePath+'withoutBckBtn.html';
@@ -108,7 +108,6 @@ function login()
                  window.localStorage.setItem("Password",password.value);
                  setUserStatusInLocalStorage("Valid");
 			  setUserSessionDetails(data,jsonToBeSend);
-                           
                 if(data.hasOwnProperty('EaInMobile') && 
                  data.EaInMobile != null){
                   if(data.EaInMobile){
@@ -134,7 +133,9 @@ function login()
 			
 			}else if(data.Status == 'Failure'){
  			   successMessage = data.Message;
-			   if(successMessage.length == 0){
+			   if(successMessage.includes("session")){
+					successMessage = "Oops !! Something wen't wrong";
+				}else if(successMessage.length == 0){
 					successMessage = "Wrong UserName or Password";
 				}
 				document.getElementById("loginErrorMsg").innerHTML = successMessage;
@@ -159,8 +160,8 @@ function commanLogin(){
  	var domainName = userNameValue.split('@')[1];
 	var jsonToDomainNameSend = new Object();
 	jsonToDomainNameSend["userName"] = domainName;
-	jsonToDomainNameSend["mobilePlatform"] = device.platform;
-	//jsonToDomainNameSend["mobilePlatform"] = "Android";
+	//jsonToDomainNameSend["mobilePlatform"] = device.platform;
+	jsonToDomainNameSend["mobilePlatform"] = "Android";
 	jsonToDomainNameSend["appType"] = "NEXGEN_EXPENZING_TNE_APP";
   	//var res=JSON.stringify(jsonToDomainNameSend);
 	var requestPath = WebServicePath;
@@ -252,7 +253,7 @@ function commanLogin(){
 	 }
 
  function init() {
-	 var pgRef;
+ 	var pgRef;
 	var headerBackBtn;
 	if(window.localStorage.getItem("EmployeeId")!= null){
 		if(window.localStorage.getItem("UserStatus")=='ResetPswd'){

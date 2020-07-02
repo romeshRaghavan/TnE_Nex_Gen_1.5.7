@@ -625,9 +625,11 @@ function synchronizeBEMasterData() {
 			  type: 'POST',
 			  dataType: 'json',
 			  crossDomain: true,
+			  empId: 12,
 			  data: JSON.stringify(jsonSentToSync),
 			  success: function(data) {
 				  if(data.Status=='Success'){
+
 					mydb.transaction(function (t) {
 					t.executeSql("DELETE FROM accountHeadMst");
 					var accountHeadArray = data.AccountHeadArray;
@@ -654,7 +656,8 @@ function synchronizeBEMasterData() {
 								var exp_name = stateArr.ExpenseName;
 								var exp_is_from_to_req = stateArr.IsFromToRequired;
 								var acc_code_id = stateArr.AccountCodeId;
-								var acc_head_id = stateArr.AccountHeadId;
+				 
+				 				var acc_head_id = stateArr.AccountHeadId;
 								var isErReqd;
 								var limitAmountForER;
 								var exp_is_unit_req;
@@ -1169,7 +1172,6 @@ function setUserSessionDetails(val,userJSON){
 	 window.localStorage.setItem("BudgetingStatus",val.BudgetingStatus);
 	 window.localStorage.setItem("UnitId",val.UnitId);
 	 //window.localStorage.setItem("mobileEC",val.mobileEC);
-	window.localStorage.setItem("MapProvider", val.MapProvider);
 	 //For Mobile Google Map Role Start
 	 //End
      if(!val.hasOwnProperty('MobileMapRole')){
@@ -1198,16 +1200,16 @@ function setUserSessionDetails(val,userJSON){
     }else{
      window.localStorage.setItem("mobileEC",val.mobileEC); 
     } 
-    /*if(!val.hasOwnProperty('MapProvider')){
+    if(!val.hasOwnProperty('MapProvider')){
       window.localStorage.setItem("MapProvider","MAPMYINDIA");
     }else{
      window.localStorage.setItem("MapProvider",val.MapProvider); 
-    }*/
+    }  
     //End
 	 //window.localStorage.setItem("UserName",userJSON["user"]);
 	 //window.localStorage.setItem("Password",userJSON["pass"]);
      window.localStorage.setItem("localLanguage",0);
-	
+
 }
 
 function setUserStatusInLocalStorage(status){
