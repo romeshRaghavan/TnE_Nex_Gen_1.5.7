@@ -8,10 +8,10 @@
     <author email="tech@expenzing.com" href="http://www.expenzing.com">
         Team Expenzing
     </author>
-       <content src="index.html" />
+        <content src="index.html" />
         <preference name="permissions" value="none" />
         <preference name="orientation" value="portrait" />
-        <!--preference name="target-device" value="universal" /-->
+        <preference name="target-device" value="universal" />
         <preference name="fullscreen" value="false" />
         <preference name="webviewbounce" value="true" />
         <preference name="prerendered-icon" value="true" />
