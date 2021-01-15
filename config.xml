@@ -66,6 +66,6 @@
     
   
       
-        <gap:plugin name="cordova-plugin-inappbrowser" source="npm" />
+        
 
     </widget>
