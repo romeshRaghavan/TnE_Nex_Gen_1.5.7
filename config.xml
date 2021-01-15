@@ -26,13 +26,12 @@
         <preference name="android-targetSdkVersion" value="28" />
         <preference name='phonegap-version' value='cli-7.1.0' />
         <preference name="android-installLocation" value="auto" />
-    
         <feature name="http://api.phonegap.com/1.0/device" />
-       
         <feature name="http://api.phonegap.com/1.0/file" />
         <feature name="http://api.phonegap.com/1.0/media" />
         <feature name="http://api.phonegap.com/1.0/network" />
-
-   
         <gap:plugin name="cordova-plugin-battery-status" source="npm" />
+    
+        <gap:plugin name="cordova-plugin-compat" source="npm" spec="~1.2.0" />
+
     </widget>
