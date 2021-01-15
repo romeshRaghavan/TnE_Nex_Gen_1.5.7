@@ -39,22 +39,23 @@
         <variable name="NSPhotoLibraryUsageDescription" value="App requires access to the photo library" />
         <variable name="NSLocationAlwaysUsageDescription" value="App requires access to the photo library" />
         <variable name=" NSLocationWhenInUseUsageDescription" value="App requires access to the photo library" />
-    
-    
         <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
-    <string>This enables use of camera to attach receipt for expense submission</string>
-    </edit-config>
+        <string>This enables use of camera to attach receipt for expense submission</string>
+        </edit-config>
     
-    <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
-    <string>This enables access to gallery to fetches receipt stored for expense </string>
-    </edit-config>
+        <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
+        <string>This enables access to gallery to fetches receipt stored for expense </string>
+        </edit-config>
     
-    <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
-    <string>This enables access to location used while expense submission</string>
-    </edit-config>
+       <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+        <string>This enables access to location used while expense submission</string>
+        </edit-config>
     
-    <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
-    <string>This enables access to gallery to fetches receipt stored for expense</string>
-    </edit-config>
+        <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
+        <string>This enables access to gallery to fetches receipt stored for expense</string>
+        </edit-config>
+    
+    
+         <plugin name="cordova-plugin-actionsheet" spec="https://github.com/EddyVerbruggen/cordova-plugin-actionsheet.git" />
 
     </widget>
