@@ -60,12 +60,8 @@
         <gap:plugin name="cordova-plugin-console" source="npm" />
         <gap:plugin name="cordova-plugin-contacts" source="npm" />
         <gap:plugin name="cordova-plugin-device" source="npm" />
-        
-    
-    
-    
-        <!--<gap:plugin name="cordova-plugin-media-capture" source="npm" /> 
+     <gap:plugin name="cordova-plugin-media-capture" source="npm" /> 
         <gap:plugin name="cordova-plugin-dialogs" source="npm" />
-        <gap:plugin name="cordova-plugin-file" source="npm" spec="~4.1.1" />-->
+        <gap:plugin name="cordova-plugin-file" source="npm" spec="~4.1.1" />
 
     </widget>
