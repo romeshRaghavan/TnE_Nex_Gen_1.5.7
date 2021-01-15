@@ -36,7 +36,7 @@
 
    
         <gap:plugin name="cordova-plugin-battery-status" source="npm" />
-        <gap:plugin name="cordova-plugin-compat" source="npm" spec="~1.0.0" />
+      <!--  <gap:plugin name="cordova-plugin-compat" source="npm" spec="~1.0.0" /> -->
 
         
         <variable name="CAMERA_USAGE_DESCRIPTION" value="App requires access to the camera" />
