@@ -81,7 +81,7 @@
         <gap:plugin name="cordova-plugin-imagepicker" source="npm" />
     
          <!-- New Plugins  -->
-        <plugin name="cordova-plugin-camera" spec="~2.4.1" />
+        <plugin name="cordova-plugin-camera" spec="~2.3.0" />
 
         <plugin name="cordova-plugin-file" spec="~4.3.1" />
 
