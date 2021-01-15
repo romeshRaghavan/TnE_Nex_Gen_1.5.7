@@ -11,7 +11,7 @@
        <content src="index.html" />
         <preference name="permissions" value="none" />
         <preference name="orientation" value="portrait" />
-        <!--preference name="target-device" value="universal" /-->
+        <preference name="target-device" value="universal" />
         <preference name="fullscreen" value="false" />
         <preference name="webviewbounce" value="true" />
         <preference name="prerendered-icon" value="true" />
@@ -25,9 +25,9 @@
         <preference name="android-minSdkVersion" value="14" />
         <preference name="android-maxSdkVersion" value="29" />
         <preference name="android-targetSdkVersion" value="28" />
-        <preference name='phonegap-version' value='cli-7.1.0' />
+        <preference name='phonegap-version' value='cli-6.5.0' />
         <preference name="android-installLocation" value="auto" />
-
+        <preference name="AndroidPersistentFileLocation" value="Compatibility" />
         <feature name="http://api.phonegap.com/1.0/device" />
        
         <feature name="http://api.phonegap.com/1.0/file" />
@@ -36,9 +36,9 @@
 
    
         <gap:plugin name="cordova-plugin-battery-status" source="npm" />
-      <!--  <gap:plugin name="cordova-plugin-compat" source="npm" spec="~1.0.0" /> -->
+        <!-- <gap:plugin name="cordova-plugin-compat" source="npm" spec="~1.2.0" />-->
 
-        
+        <gap:plugin name="cordova-plugin-camera" source="npm" spec="~2.3.0" />
         <variable name="CAMERA_USAGE_DESCRIPTION" value="App requires access to the camera" />
         <variable name="NSPHOTOLIBRARYUSAGEDESCRIPTIONENTRY" value="App requires access to the photo library" />
         <variable name="NSPhotoLibraryUsageDescription" value="App requires access to the photo library" />
@@ -65,13 +65,13 @@
 
         <gap:plugin name="cordova-plugin-media-capture" source="npm" spec="~1.2.0"/>
         <gap:plugin name="cordova-plugin-console" source="npm" />
-        <gap:plugin name="cordova-plugin-contacts" source="npm" />
+        <gap:plugin name="cordova-plugin-contacts" source="npm" spec="~2.0.0"/>
         <gap:plugin name="cordova-plugin-device" source="npm" />
        
         <gap:plugin name="cordova-plugin-dialogs" source="npm" />
-        
+        <gap:plugin name="cordova-plugin-file" source="npm" spec="~4.1.1" />
     
-        <gap:plugin name="cordova-plugin-geolocation" source="npm" />
+        <gap:plugin name="cordova-plugin-geolocation" source="npm" spec="~2.0.0"/>
         <gap:plugin name="cordova-plugin-globalization" source="npm" />
         <gap:plugin name="cordova-plugin-inappbrowser" source="npm" />
         <gap:plugin name="cordova-plugin-media" source="npm" spec="~2.0.0"/>
@@ -79,13 +79,7 @@
         <gap:plugin name="cordova-plugin-splashscreen" source="npm" />
         <gap:plugin name="cordova-plugin-vibration" source="npm" />
         <gap:plugin name="cordova-plugin-imagepicker" source="npm" />
-    
-         <!-- New Plugins  -->
-        <plugin name="cordova-plugin-camera" spec="~2.3.0" />
-
-        <plugin name="cordova-plugin-file" spec="~4.3.1" />
-
-        <plugin name="cordova-plugin-file-transfer" spec="~1.6.1" />
+       
 
         <icon src="icon.png" />
         
