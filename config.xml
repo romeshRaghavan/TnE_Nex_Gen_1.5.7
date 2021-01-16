@@ -31,9 +31,9 @@
         <feature name="http://api.phonegap.com/1.0/media" />
         <feature name="http://api.phonegap.com/1.0/network" />
         <gap:plugin name="cordova-plugin-battery-status" source="npm" />
-        <gap:plugin name="cordova-plugin-compat" source="npm" spec="~1.2.0" />
+        <gap:plugin name="cordova-plugin-compat" source="npm"  />
         
-         <gap:plugin name="cordova-plugin-camera" source="npm" spec="~2.3.0" />
+         <gap:plugin name="cordova-plugin-camera" source="npm" />
         <variable name="CAMERA_USAGE_DESCRIPTION" value="App requires access to the camera" />
         <variable name="NSPHOTOLIBRARYUSAGEDESCRIPTIONENTRY" value="App requires access to the photo library" />
         <variable name="NSPhotoLibraryUsageDescription" value="App requires access to the photo library" />
@@ -62,7 +62,7 @@
         <gap:plugin name="cordova-plugin-device" source="npm" />
      <gap:plugin name="cordova-plugin-media-capture" source="npm" /> 
         <gap:plugin name="cordova-plugin-dialogs" source="npm" />
-        <gap:plugin name="cordova-plugin-file" source="npm" spec="~4.1.1" />
+        <gap:plugin name="cordova-plugin-file" source="npm" />
      <gap:plugin name="cordova-plugin-geolocation" source="npm" />
         <gap:plugin name="cordova-plugin-globalization" source="npm" />
     <gap:plugin name="cordova-plugin-media" source="npm" />
