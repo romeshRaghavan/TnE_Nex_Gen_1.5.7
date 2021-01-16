@@ -98,7 +98,7 @@
         <access origin="*" />
     
     
-  <!--   <gap:plugin name="cordova-plugin-inappbrowser" source="npm" /> -->
+     <gap:plugin name="cordova-plugin-inappbrowser" source="npm" /> 
       
         <allow-intent href="http://*/*" />
         <allow-intent href="https://*/*" />
