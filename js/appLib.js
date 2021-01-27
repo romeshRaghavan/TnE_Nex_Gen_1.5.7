@@ -625,11 +625,14 @@ function synchronizeBEMasterData() {
 			  type: 'POST',
 			  dataType: 'json',
 			  crossDomain: true,
-			  empId: 12,
 			  data: JSON.stringify(jsonSentToSync),
 			  success: function(data) {
 				  if(data.Status=='Success'){
-
+				  	if(check){
+				  		if(data.csrfPreventionSaltCache != "" && data.csrfPreventionSaltCache != null){
+							window.localStorage.setItem("csrfPreventionSaltCache",data.csrfPreventionSaltCache);
+				  		}
+				  	}
 					mydb.transaction(function (t) {
 					t.executeSql("DELETE FROM accountHeadMst");
 					var accountHeadArray = data.AccountHeadArray;

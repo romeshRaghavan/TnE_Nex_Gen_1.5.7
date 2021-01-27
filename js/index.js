@@ -6,14 +6,14 @@ var companyName = "utkarsh";
 //var WebServicePath ='http://1.255.255.184:8085/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath ='http://1.255.255.36:9898/NexstepWebService/mobileLinkResolver.service';
-//var WebServicePath ='http://1.255.255.143:8081/NexstepWebService/mobileLinkResolver.service';
-var WebServicePath = 'https://appservices.expenzing.com/NexstepWebService/mobileLinkResolver.service';
+var WebServicePath ='http://1.255.255.143:8084/NexstepWebService/mobileLinkResolver.service';
+//var WebServicePath = 'https://appservices.expenzing.com/NexstepWebService/mobileLinkResolver.service';
 var clickedFlagCar = false;
 var clickedFlagTicket = false;
 var clickedFlagHotel = false;
 var clickedCarRound = false;
 var clickedTicketRound = false;
-var clickedHotelRound = false;
+var clickedHelRound = false;
 var perUnitDetailsJSON= new Object();
 var ismodeCategoryJSON=new Object();
 var exceptionStatus = 'N';
@@ -36,6 +36,7 @@ var smsToExpenseStr = "" ;
 var smsWatchFlagStatus = false;
 var expensePageFlag = '';		//S for smsExpenses And N for normal expenses
 var filtersStr = "";
+var check = false;
 j(document).ready(function(){ 
 document.addEventListener("deviceready",loaded,false);
 });
@@ -55,7 +56,7 @@ function login()
 	//setUrlPathLocalStorage(urlPath);
 	var userName =  userName.value;
  	var domainName = userName.split('@')[1];
-	var check = domainName.includes(companyName);
+	 check = domainName.includes(companyName);
 	if(check)
 	{
 	var dencc = "";
@@ -362,7 +363,7 @@ function saveBusinessExpDetails(jsonBEArr,busExpDetailsArr){
 	 requestRunning = true;
 	 var userName =window.localStorage.getItem("UserName");
  	 var domainName = userName.split('@')[1];
-	 var check = domainName.includes(companyName);
+	  check = domainName.includes(companyName);
 	 if(check){
 	 jsonToSaveBE["EmployeeCode"]=window.localStorage.getItem("EmployeeCode");
 	 var dencc = "";
@@ -426,9 +427,10 @@ function saveTravelSettleExpDetails(jsonTSArr,tsExpDetailsArr){
 	 requestRunning = true;
 	 var userName =window.localStorage.getItem("UserName");
  	 var domainName = userName.split('@')[1];
-	 var check = domainName.includes(companyName);
+	  check = domainName.includes(companyName);
 	 if(check){
 	 jsonToSaveTS["EmployeeCode"]=window.localStorage.getItem("EmployeeCode");
+	 jsonToSaveTS["csrfPreventionSaltCache"]=window.localStorage.getItem("csrfPreventionSaltCache");
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToSaveTS);
 	 var token = generateToken();
@@ -445,6 +447,12 @@ function saveTravelSettleExpDetails(jsonTSArr,tsExpDetailsArr){
 				  crossDomain: true,
 				  data: JSON.stringify(jsonToSaveTS),
 				  success: function(data) {
+				  	if(check){
+				  		if(data.csrfPreventionSaltCache != "" && data.csrfPreventionSaltCache != null){
+							window.localStorage.setItem("csrfPreventionSaltCache",data.csrfPreventionSaltCache);
+				  		}
+				  		}
+
 				  	if(data.Status=="Success"){
 				  	successMessage = "Record(s) has been synchronized successfully.";
 					 for(var i=0; i<tsExpDetailsArr.length; i++ ){
@@ -491,9 +499,10 @@ function sendForApprovalBusinessDetails(jsonBEArr,busExpDetailsArr,accountHeadID
 	 jsonToSaveBE["title"]= window.localStorage.getItem("FirstName")+"/"+jsonToSaveBE["startDate"]+" to "+jsonToSaveBE["endDate"];
 	 var userName =window.localStorage.getItem("UserName");
  	 var domainName = userName.split('@')[1];
-	 var check = domainName.includes(companyName);
+	  check = domainName.includes(companyName);
 	 if(check){
 	 var dencc = "";
+	 jsonToSaveBE["csrfPreventionSaltCache"]=window.localStorage.getItem("csrfPreventionSaltCache");
 	 jsonToSaveBE["EmployeeCode"]=window.localStorage.getItem("EmployeeCode");
 	 var tempJSON = JSON.stringify(jsonToSaveBE);
 	 var token = generateToken();
@@ -517,8 +526,13 @@ j.ajax({
 				  crossDomain: true,
 				  data: JSON.stringify(jsonToSaveBE),
 				  success: function(data) {
+				  	if(check){
+				  		if(data.csrfPreventionSaltCache != "" && data.csrfPreventionSaltCache != null){
+							window.localStorage.setItem("csrfPreventionSaltCache",data.csrfPreventionSaltCache);
+				  		}
+				  		}
 				  	if(data.Status=="Success"){
-					  	if(data.hasOwnProperty('DelayStatus')){
+				  		if(data.hasOwnProperty('DelayStatus')){
 					  		setDelayMessage(data,jsonToSaveBE,busExpDetailsArr);
 					  		 j('#loading_Cat').hide();
 					  	}else{
@@ -1075,7 +1089,7 @@ function syncSubmitTravelDetails(){
 function saveTravelRequestAjax(jsonToSaveTR){
 	var userName =window.localStorage.getItem("UserName");
  	var domainName = userName.split('@')[1];
-	var check = domainName.includes(companyName);
+	 check = domainName.includes(companyName);
 	var jsonToSaveTRTemp = new Object();
 	jsonToSaveTR["UserName"]=window.localStorage.getItem("UserName");
 	jsonToSaveTR["FirstName"]=window.localStorage.getItem("FirstName");	 
@@ -1085,6 +1099,7 @@ function saveTravelRequestAjax(jsonToSaveTR){
     jsonToSaveTR["GradeId"]=window.localStorage.getItem("GradeID");
 	if(check){
 	 jsonToSaveTR["EmployeeCode"]=window.localStorage.getItem("EmployeeCode");
+	 jsonToSaveTR["csrfPreventionSaltCache"]=window.localStorage.getItem("csrfPreventionSaltCache");
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToSaveTR);
 	 jsonToSaveTRTemp = jsonToSaveTR;
@@ -1102,6 +1117,11 @@ function saveTravelRequestAjax(jsonToSaveTR){
 			  crossDomain: true,
 			  data: JSON.stringify(jsonToSaveTR),
 			  success: function(data) {
+			  	if(check){
+				  		if(data.csrfPreventionSaltCache != "" && data.csrfPreventionSaltCache != null){
+							window.localStorage.setItem("csrfPreventionSaltCache",data.csrfPreventionSaltCache);
+				  		}
+				  		}
 				  if(data.Status=="Failure"){
 				  	 successMessage = data.Message;
 					  if(data.hasOwnProperty('IsEntitlementExceed')){
@@ -1119,6 +1139,7 @@ function saveTravelRequestAjax(jsonToSaveTR){
                       //alert(window.lang.translate(successMessage));
 					  }
 				  }else if(data.Status=="Success"){
+
 					  successMessage = data.Message;
 						j('#loading_Cat').hide();
 						j('#mainContainer').load(pageRefSuccess);
@@ -2200,6 +2221,7 @@ function resetImageData(){
 					{
 				var dencc = "";
 				jsonWalletArr[i]["EmployeeCode"]=window.localStorage.getItem("EmployeeCode");
+				jsonWalletArr[i]["csrfPreventionSaltCache"]=window.localStorage.getItem("csrfPreventionSaltCache");
 				var tempJSON = JSON.stringify(jsonWalletArr[i]);
 				var token = generateToken();
    				dencc = getNewValueDefine(tempJSON,token);
@@ -2213,6 +2235,11 @@ function resetImageData(){
 					  crossDomain: true,
 					  data: JSON.stringify(jsonWalletArr[i]),
 					  success: function(data) {
+					  	if(check){
+				  		if(data.csrfPreventionSaltCache != "" && data.csrfPreventionSaltCache != null){
+							window.localStorage.setItem("csrfPreventionSaltCache",data.csrfPreventionSaltCache);
+				  		}
+				  		}
 						if(data.SyncStatus=="Success"){
 							for(var i=0; i<jsonWalletIDArr.length; i++ ){
 								walletID = jsonWalletIDArr[i];
@@ -2700,6 +2727,7 @@ function saveEmployeeAdvanceAjax(jsonToSaveEA){
 	if(check){
 	 var dencc = "";
 	 jsonToSaveEA["EmployeeCode"]=window.localStorage.getItem("EmployeeCode");
+	 jsonToSaveEA["csrfPreventionSaltCache"]=window.localStorage.getItem("csrfPreventionSaltCache");
 	 var tempJSON = JSON.stringify(jsonToSaveEA);
 	 var token = generateToken();
      dencc = getNewValueDefine(tempJSON,token);
@@ -2716,6 +2744,11 @@ function saveEmployeeAdvanceAjax(jsonToSaveEA){
 			  crossDomain: true,
 			  data: JSON.stringify(jsonToSaveEA),
 				  success: function(data) {
+				  	if(check){
+				  		if(data.csrfPreventionSaltCache != "" && data.csrfPreventionSaltCache != null){
+							window.localStorage.setItem("csrfPreventionSaltCache",data.csrfPreventionSaltCache);
+				  		}
+				  		}
 				  	if(data.Status=="Success"){
 				        successMessage = data.Message;
 						requestRunning = false;
@@ -3051,12 +3084,13 @@ function sendForApprovalBusinessDetailsWithEa(jsonBEArr,jsonEAArr,busExpDetailsA
 	 jsonToSaveBE["ProcessStatus"] = "1";
 	 jsonToSaveBE["UnitId"]=window.localStorage.getItem("UnitId");
      jsonToSaveBE["GradeId"]=window.localStorage.getItem("GradeID");
-	 jsonToSaveBE["title"]= window.localStorage.getItem("FirstName")+"/"+jsonToSaveBE["startDate"]+" to "+jsonToSaveBE["endDate"];
+     jsonToSaveBE["title"]= window.localStorage.getItem("FirstName")+"/"+jsonToSaveBE["startDate"]+" to "+jsonToSaveBE["endDate"];
 	 	var userName =window.localStorage.getItem("UserName");
 	 	var domainName = userName.split('@')[1];
 	var check = domainName.includes(companyName);
 	if(check){
 	 var dencc = "";
+	 jsonToSaveBE["csrfPreventionSaltCache"]=window.localStorage.getItem("csrfPreventionSaltCache");
 	 jsonToSaveBE["EmployeeCode"]=window.localStorage.getItem("EmployeeCode");
 	 var tempJSON = JSON.stringify(jsonToSaveBE);
 	 var token = generateToken();
@@ -3080,8 +3114,13 @@ j.ajax({
 				  crossDomain: true,
 				  data: JSON.stringify(jsonToSaveBE),
 				  success: function(data) {
+				  	if(check){
+				  		if(data.csrfPreventionSaltCache != "" && data.csrfPreventionSaltCache != null){
+							window.localStorage.setItem("csrfPreventionSaltCache",data.csrfPreventionSaltCache);
+				  		}
+				  	}
 				  	if(data.Status=="Success"){
-					  	if(data.hasOwnProperty('DelayStatus')){
+				  		if(data.hasOwnProperty('DelayStatus')){
 					  		setDelayMessage(data,jsonToSaveBE,busExpDetailsArr);
 					  		 j('#loading_Cat').hide();
 					  	}else{
