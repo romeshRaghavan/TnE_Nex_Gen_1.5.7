@@ -52,12 +52,13 @@ function login()
     
     var jsonToBeSend=new Object();
     jsonToBeSend["user"] = userName.value;
+	   alert("userName : "+userName);
     jsonToBeSend["pass"] = password.value;
 	//setUrlPathLocalStorage(urlPath);
 	var userName =  userName.value;
  	var domainName = userName.split('@')[1];
 	 check = domainName.includes(companyName);
-	 alert("check "+check);
+	 alert("check : "+check);
 	if(check)
 	{
 	var dencc = "";
