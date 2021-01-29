@@ -49,6 +49,10 @@
         <string>This enables access to gallery to fetches receipt stored for expense </string>
         </edit-config>
     
+    <edit-config cleartextTrafficPermitted="true">
+        </edit-config>
+    
+    
        <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
         <string>This enables access to location used while expense submission</string>
         </edit-config>
