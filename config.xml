@@ -118,12 +118,6 @@
   
 
         </platform>
-   <platform name="android">
-  <edit-config>
-      <application android:usesCleartextTraffic="true" />
-  </edit-config>
-</platform>
-      
-      
+         
     
     </widget>
