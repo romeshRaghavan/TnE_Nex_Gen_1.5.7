@@ -1,4 +1,4 @@
- var j = jQuery.noConflict();
+var j = jQuery.noConflict();
 var defaultPagePath='app/pages/';
 var headerMsg = "Expenzing";
 var companyName = "utkarsh";
@@ -6,14 +6,14 @@ var companyName = "utkarsh";
 //var WebServicePath ='http://1.255.255.184:8085/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath ='http://1.255.255.36:9898/NexstepWebService/mobileLinkResolver.service';
-//var WebServicePath ='http://1.255.255.143:8084/NexstepWebService/mobileLinkResolver.service';
-var WebServicePath = 'https://appservices.expenzing.com/NexstepWebService/mobileLinkResolver.service';
+var WebServicePath ='http://1.255.255.143:8081/NexstepWebService/mobileLinkResolver.service';
+//var WebServicePath = 'https://appservices.expenzing.com/NexstepWebService/mobileLinkResolver.service';
 var clickedFlagCar = false;
 var clickedFlagTicket = false;
 var clickedFlagHotel = false;
 var clickedCarRound = false;
 var clickedTicketRound = false;
-var clickedHelRound = false;
+var clickedHotelRound = false;
 var perUnitDetailsJSON= new Object();
 var ismodeCategoryJSON=new Object();
 var exceptionStatus = 'N';
@@ -36,7 +36,6 @@ var smsToExpenseStr = "" ;
 var smsWatchFlagStatus = false;
 var expensePageFlag = '';		//S for smsExpenses And N for normal expenses
 var filtersStr = "";
-var check = false;
 j(document).ready(function(){ 
 document.addEventListener("deviceready",loaded,false);
 });
@@ -56,7 +55,7 @@ function login()
 	//setUrlPathLocalStorage(urlPath);
 	var userName =  userName.value;
  	var domainName = userName.split('@')[1];
-	 check = domainName.includes(companyName);
+	var check = domainName.includes(companyName);
 	if(check)
 	{
 	var dencc = "";
@@ -76,7 +75,7 @@ function login()
          data: JSON.stringify(jsonToBeSend),
          success: function(data) {
          	if (data.Status == 'Success'){
-
+                
                 if(data.hasOwnProperty('multiLangInMobile') && data.multiLangInMobile != null &&
                    data.multiLangInMobile){
                        	var headerBackBtn=defaultPagePath+'withoutBckBtn.html';
@@ -85,10 +84,10 @@ function login()
                     j('#mainContainer').load(pageRef); 
                        appPageHistory.push(pageRef);
                        window.localStorage.setItem("UserName",userName);
+                       window.localStorage.setItem("Token",data.Token);
                     if(check){
-                       window.localStorage.setItem("EmployeeCode",data.EmployeeCode);
-                        token = generateToken();
-                       window.localStorage.setItem("Password","dencc="+getNewValueDefine(password.value,token)+"$"+token);
+                    	 	 token = generateToken();
+                      window.localStorage.setItem("Password","dencc="+getNewValueDefine(password.value,token)+"$"+token);
                     }
                     else
                      window.localStorage.setItem("Password",password.value);
@@ -109,6 +108,7 @@ function login()
                  window.localStorage.setItem("Password",password.value);
                  setUserStatusInLocalStorage("Valid");
 			  setUserSessionDetails(data,jsonToBeSend);
+                           
                 if(data.hasOwnProperty('EaInMobile') && 
                  data.EaInMobile != null){
                   if(data.EaInMobile){
@@ -134,9 +134,7 @@ function login()
 			
 			}else if(data.Status == 'Failure'){
  			   successMessage = data.Message;
-			   if(successMessage.includes("session")){
-					successMessage = "Oops !! Something wen't wrong";
-				}else if(successMessage.length == 0){
+			   if(successMessage.length == 0){
 					successMessage = "Wrong UserName or Password";
 				}
 				document.getElementById("loginErrorMsg").innerHTML = successMessage;
@@ -254,7 +252,7 @@ function commanLogin(){
 	 }
 
  function init() {
- 	var pgRef;
+	 var pgRef;
 	var headerBackBtn;
 	if(window.localStorage.getItem("EmployeeId")!= null){
 		if(window.localStorage.getItem("UserStatus")=='ResetPswd'){
@@ -352,20 +350,14 @@ function viewTravelSettlementExp(){
 function saveBusinessExpDetails(jsonBEArr,busExpDetailsArr){
 	 var jsonToSaveBE = new Object();
 	 var headerBackBtn=defaultPagePath+'backbtnPage.html';
-	 jsonToSaveBE["FirstName"]=window.localStorage.getItem("FirstName");	 
-	 jsonToSaveBE["employeeId"] = window.localStorage.getItem("EmployeeId");
+	 jsonToSaveBE["employeeId"] = window.localStorage.getItem("EmployeeId");;
 	 jsonToSaveBE["ProcessStatus"] = "0";
-	 jsonToSaveBE["UserName"]=window.localStorage.getItem("UserName");
-	 jsonToSaveBE["LastName"]=window.localStorage.getItem("LastName");
-	 jsonToSaveBE["UnitId"]=window.localStorage.getItem("UnitId");
-     jsonToSaveBE["GradeId"]=window.localStorage.getItem("GradeID");
 	 jsonToSaveBE["expenseDetails"] = jsonBEArr;
 	 requestRunning = true;
 	 var userName =window.localStorage.getItem("UserName");
  	 var domainName = userName.split('@')[1];
-	  check = domainName.includes(companyName);
+	 var check = domainName.includes(companyName);
 	 if(check){
-	 jsonToSaveBE["EmployeeCode"]=window.localStorage.getItem("EmployeeCode");
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToSaveBE);
 	 var token = generateToken();
@@ -417,20 +409,13 @@ function saveBusinessExpDetails(jsonBEArr,busExpDetailsArr){
 function saveTravelSettleExpDetails(jsonTSArr,tsExpDetailsArr){
 	var headerBackBtn=defaultPagePath+'backbtnPage.html';
 	 var jsonToSaveTS = new Object();
-	 jsonToSaveTS["FirstName"]=window.localStorage.getItem("FirstName");	 
 	 jsonToSaveTS["employeeId"] = window.localStorage.getItem("EmployeeId");
 	 jsonToSaveTS["expenseDetails"] = jsonTSArr;
-	 jsonToSaveTS["UserName"]=window.localStorage.getItem("UserName");
-	 jsonToSaveTS["LastName"]=window.localStorage.getItem("LastName");
-	 jsonToSaveTS["UnitId"]=window.localStorage.getItem("UnitId");
-     jsonToSaveTS["GradeId"]=window.localStorage.getItem("GradeID");
 	 requestRunning = true;
 	 var userName =window.localStorage.getItem("UserName");
  	 var domainName = userName.split('@')[1];
-	  check = domainName.includes(companyName);
+	 var check = domainName.includes(companyName);
 	 if(check){
-	 jsonToSaveTS["EmployeeCode"]=window.localStorage.getItem("EmployeeCode");
-	 jsonToSaveTS["csrfPreventionSaltCache"]=window.localStorage.getItem("csrfPreventionSaltCache");
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToSaveTS);
 	 var token = generateToken();
@@ -447,12 +432,6 @@ function saveTravelSettleExpDetails(jsonTSArr,tsExpDetailsArr){
 				  crossDomain: true,
 				  data: JSON.stringify(jsonToSaveTS),
 				  success: function(data) {
-				  	if(check){
-				  		if(data.csrfPreventionSaltCache != "" && data.csrfPreventionSaltCache != null){
-							window.localStorage.setItem("csrfPreventionSaltCache",data.csrfPreventionSaltCache);
-				  		}
-				  		}
-
 				  	if(data.Status=="Success"){
 				  	successMessage = "Record(s) has been synchronized successfully.";
 					 for(var i=0; i<tsExpDetailsArr.length; i++ ){
@@ -485,25 +464,18 @@ function sendForApprovalBusinessDetails(jsonBEArr,busExpDetailsArr,accountHeadID
 	 var jsonToSaveBE = new Object();
 	 jsonToSaveBE["employeeId"] = window.localStorage.getItem("EmployeeId");
 	 jsonToSaveBE["expenseDetails"] = jsonBEArr;
-	 jsonToSaveBE["UserName"]=window.localStorage.getItem("UserName");
 	 jsonToSaveBE["startDate"]=expenseClaimDates.minInStringFormat;
 	 jsonToSaveBE["endDate"]=expenseClaimDates.maxInStringFormat;
-	 jsonToSaveBE["FirstName"]=window.localStorage.getItem("FirstName");
 	 jsonToSaveBE["DelayAllowCheck"]=false;
-	 jsonToSaveBE["UnitId"]=window.localStorage.getItem("UnitId");
-     jsonToSaveBE["GradeId"]=window.localStorage.getItem("GradeID");
 	 jsonToSaveBE["BudgetingStatus"]=window.localStorage.getItem("BudgetingStatus");
-	 jsonToSaveBE["LastName"]=window.localStorage.getItem("LastName");
 	 jsonToSaveBE["accountHeadId"]=accountHeadID;
 	 jsonToSaveBE["ProcessStatus"] = "1";
 	 jsonToSaveBE["title"]= window.localStorage.getItem("FirstName")+"/"+jsonToSaveBE["startDate"]+" to "+jsonToSaveBE["endDate"];
 	 var userName =window.localStorage.getItem("UserName");
  	 var domainName = userName.split('@')[1];
-	  check = domainName.includes(companyName);
+	 var check = domainName.includes(companyName);
 	 if(check){
 	 var dencc = "";
-	 jsonToSaveBE["csrfPreventionSaltCache"]=window.localStorage.getItem("csrfPreventionSaltCache");
-	 jsonToSaveBE["EmployeeCode"]=window.localStorage.getItem("EmployeeCode");
 	 var tempJSON = JSON.stringify(jsonToSaveBE);
 	 var token = generateToken();
      dencc = getNewValueDefine(tempJSON,token);
@@ -526,13 +498,8 @@ j.ajax({
 				  crossDomain: true,
 				  data: JSON.stringify(jsonToSaveBE),
 				  success: function(data) {
-				  	if(check){
-				  		if(data.csrfPreventionSaltCache != "" && data.csrfPreventionSaltCache != null){
-							window.localStorage.setItem("csrfPreventionSaltCache",data.csrfPreventionSaltCache);
-				  		}
-				  		}
 				  	if(data.Status=="Success"){
-				  		if(data.hasOwnProperty('DelayStatus')){
+					  	if(data.hasOwnProperty('DelayStatus')){
 					  		setDelayMessage(data,jsonToSaveBE,busExpDetailsArr);
 					  		 j('#loading_Cat').hide();
 					  	}else{
@@ -549,14 +516,10 @@ j.ajax({
 						}
 					}else if(data.Status=="Failure"){
 					 	successMessage = data.Message;
-					 	if(successMessage.includes("session")){
-						sessionTimeout();
-					 }else{
-					 	requestRunning = false;
+						requestRunning = false;
 					 	j('#loading_Cat').hide();
 						j('#mainHeader').load(headerBackBtn);
 					 	j('#mainContainer').load(pageRefFailure);
-					 }
 					 }else{
 						 j('#loading_Cat').hide();
 						successMessage = "Oops!! Something went wrong. Please contact system administrator.";
@@ -634,15 +597,11 @@ function createExpNameDropDown(jsonExpNameArr){
 		}
 	}
 	
-	$(".dropdown-content").hide();
 	document.getElementById("expFromLoc").value = "";
 	document.getElementById("expToLoc").value = "";
 	document.getElementById("expNarration").value = "";
 	document.getElementById("expUnit").value = "";
 	document.getElementById("expAmt").value = "";
-	fromLocationWayPoint = "";
-	toLocationWayPoint = "";
-
 	$("a").click(function () { 
 		$("#mapLink").fadeTo("fast").removeAttr("href"); 
 	});
@@ -1089,17 +1048,10 @@ function syncSubmitTravelDetails(){
 function saveTravelRequestAjax(jsonToSaveTR){
 	var userName =window.localStorage.getItem("UserName");
  	var domainName = userName.split('@')[1];
-	 check = domainName.includes(companyName);
+	var check = domainName.includes(companyName);
 	var jsonToSaveTRTemp = new Object();
-	jsonToSaveTR["UserName"]=window.localStorage.getItem("UserName");
-	jsonToSaveTR["FirstName"]=window.localStorage.getItem("FirstName");	 
-	jsonToSaveTR["LastName"]=window.localStorage.getItem("LastName");
-	jsonToSaveTR["EmployeeId"]=window.localStorage.getItem("EmployeeId");
-	jsonToSaveTR["UnitId"]=window.localStorage.getItem("UnitId");
-    jsonToSaveTR["GradeId"]=window.localStorage.getItem("GradeID");
+
 	if(check){
-	 jsonToSaveTR["EmployeeCode"]=window.localStorage.getItem("EmployeeCode");
-	 jsonToSaveTR["csrfPreventionSaltCache"]=window.localStorage.getItem("csrfPreventionSaltCache");
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonToSaveTR);
 	 jsonToSaveTRTemp = jsonToSaveTR;
@@ -1117,29 +1069,19 @@ function saveTravelRequestAjax(jsonToSaveTR){
 			  crossDomain: true,
 			  data: JSON.stringify(jsonToSaveTR),
 			  success: function(data) {
-			  	if(check){
-				  		if(data.csrfPreventionSaltCache != "" && data.csrfPreventionSaltCache != null){
-							window.localStorage.setItem("csrfPreventionSaltCache",data.csrfPreventionSaltCache);
-				  		}
-				  		}
 				  if(data.Status=="Failure"){
-				  	 successMessage = data.Message;
 					  if(data.hasOwnProperty('IsEntitlementExceed')){
 						if(check){
 							setTREntitlementExceedMessage(data,jsonToSaveTRTemp);
 						}else{
 							setTREntitlementExceedMessage(data,jsonToSaveTR);
+						}							 
 						}
-						}else if(successMessage.includes("session")){
-					 	sessionTimeout();
-					 	}else{
-					  j('#loading_Cat').hide();
-					  j('#mainContainer').load(pageRefFailure);
-					   appPageHistory.push(pageRefFailure);
+					  successMessage = data.Message;
                       //alert(window.lang.translate(successMessage));
-					  }
-				  }else if(data.Status=="Success"){
 
+					  
+				  }else if(data.Status=="Success"){
 					  successMessage = data.Message;
 						j('#loading_Cat').hide();
 						j('#mainContainer').load(pageRefSuccess);
@@ -1456,10 +1398,6 @@ function setPerUnitDetails(transaction, results){
 			document.getElementById("expNarration").value = "";
 			document.getElementById("expUnit").value = "";
 			document.getElementById("expAmt").value = "";
-			$(".dropdown-content").hide();
-			fromLocationWayPoint = "";
-			toLocationWayPoint = "";
-
 		    if(perUnitDetailsJSON.expenseIsfromAndToReqd=='N'){
 				document.getElementById("expFromLoc").value="";
 				document.getElementById("expToLoc").value="";
@@ -1470,9 +1408,6 @@ function setPerUnitDetails(transaction, results){
 				document.getElementById("expNarration").disabled =false;
 				document.getElementById("expNarration").style.backgroundColor='#FFFFFF';
 				document.getElementById("mapImage").style.display= "none";
-				$(".dropdown-content").hide();
-				fromLocationWayPoint = "";
-				toLocationWayPoint = "";
 			}else{
 				document.getElementById("expFromLoc").disabled =false;
 				document.getElementById("expToLoc").disabled =false;
@@ -1480,21 +1415,16 @@ function setPerUnitDetails(transaction, results){
 				document.getElementById("expToLoc").value="";
 				document.getElementById("expNarration").value="";
 				document.getElementById("expFromLoc").style.backgroundColor='#FFFFFF'; 
-				document.getElementById("expToLoc").style.backgroundColor='#FFFFFF';
-				$(".dropdown-content").hide();
-				fromLocationWayPoint = "";
-				toLocationWayPoint = "";
+				document.getElementById("expToLoc").style.backgroundColor='#FFFFFF'; 
 				//alert(window.localStorage.getItem("MobileMapRole"))
 				if(window.localStorage.getItem("MobileMapRole") == 'true') 
 				{
-					if(window.localStorage.getItem("MapProvider") == "GOOGLEMAP"){
 					attachGoogleSearchBox(document.getElementById("expFromLoc"));
 					attachGoogleSearchBox(document.getElementById("expToLoc"));
-					}
 					document.getElementById("mapImage").style.display="";
 					document.getElementById("expNarration").disabled =true;
 					document.getElementById("expNarration").style.backgroundColor='#d1d1d1';
-				}
+				} 
 			}
 			if(perUnitDetailsJSON.isUnitReqd=='Y'){
 				document.getElementById("expAmt").value="";
@@ -2212,16 +2142,9 @@ function resetImageData(){
 		 		var userName =window.localStorage.getItem("UserName");
 		 		var domainName = userName.split('@')[1];
 				var check = domainName.includes(companyName);
-				 jsonWalletArr[i]["UserName"]=window.localStorage.getItem("UserName");
-				 jsonWalletArr[i]["FirstName"]=window.localStorage.getItem("FirstName");	 
-				 jsonWalletArr[i]["LastName"]=window.localStorage.getItem("LastName");
-				 jsonWalletArr[i]["UnitId"]=window.localStorage.getItem("UnitId");
- 				 jsonWalletArr[i]["GradeId"]=window.localStorage.getItem("GradeID");
     		       if(check)
 					{
 				var dencc = "";
-				jsonWalletArr[i]["EmployeeCode"]=window.localStorage.getItem("EmployeeCode");
-				jsonWalletArr[i]["csrfPreventionSaltCache"]=window.localStorage.getItem("csrfPreventionSaltCache");
 				var tempJSON = JSON.stringify(jsonWalletArr[i]);
 				var token = generateToken();
    				dencc = getNewValueDefine(tempJSON,token);
@@ -2235,11 +2158,6 @@ function resetImageData(){
 					  crossDomain: true,
 					  data: JSON.stringify(jsonWalletArr[i]),
 					  success: function(data) {
-					  	if(check){
-				  		if(data.csrfPreventionSaltCache != "" && data.csrfPreventionSaltCache != null){
-							window.localStorage.setItem("csrfPreventionSaltCache",data.csrfPreventionSaltCache);
-				  		}
-				  		}
 						if(data.SyncStatus=="Success"){
 							for(var i=0; i<jsonWalletIDArr.length; i++ ){
 								walletID = jsonWalletIDArr[i];
@@ -2256,15 +2174,10 @@ function resetImageData(){
 						 	j('#wallet_msg').hide().fadeIn('slow').delay(3000).fadeOut('slow');
 							j('#loading_Cat').hide();
 						}else if(data.SyncStatus=="Failure"){
-							successMessage = data.Message;
-							if(successMessage.includes("session")){
-								sessionTimeout();
-							}else{
 							document.getElementById("wallet_msg").innerHTML = "File "+data.FileName+" synch fail.";
 							j('#mainHeader').load(headerBackBtn);
 							j('#wallet_msg').hide().fadeIn('slow').delay(3000).fadeOut('slow');
 							j('#loading_Cat').hide();
-						 }
 						}
 					},
 					  error:function(data) {
@@ -2341,11 +2254,6 @@ function validateValidMobileUser(){
 		&& (window.localStorage.getItem("UserStatus")==null || window.localStorage.getItem("UserStatus")=='Valid')){
 		jsonToBeSend["user"]=window.localStorage.getItem("UserName");
 		jsonToBeSend["pass"]=window.localStorage.getItem("Password");
-		jsonToBeSend["UnitId"]=window.localStorage.getItem("UnitId");
-		jsonToBeSend["GradeId"]=window.localStorage.getItem("GradeId");
-	    jsonToBeSend["UserName"]=window.localStorage.getItem("UserName");
-		jsonToBeSend["FirstName"]=window.localStorage.getItem("FirstName");
-	    jsonToBeSend["LastName"]=window.localStorage.getItem("LastName");
 			var userName =window.localStorage.getItem("UserName");
  	        var domainName = userName.split('@')[1];
 			var check = domainName.includes(companyName);
@@ -2367,7 +2275,8 @@ function validateValidMobileUser(){
 	         	
 	         if(data.Status == 'Success'){
               window.lang.change(window.localStorage.getItem("localLanguage"));
-	          setUserStatusInLocalStorage("Valid");	 			/*if(!data.MobileMapRole){
+	          setUserStatusInLocalStorage("Valid");	 
+			/*if(!data.MobileMapRole){
 					window.localStorage.removeItem("MobileMapRole");
 				}else{
 					window.localStorage.setItem("MobileMapRole",data.MobileMapRole);
@@ -2407,13 +2316,6 @@ function validateValidMobileUser(){
 					   j('#loginErrorMsg').hide().fadeIn('slow').delay(4000).fadeOut('slow');
 		 			   j('#loading').hide();
 					});
-	           }else if(data.Status == 'Failure'){
-	           	successMessage = data.Message;
-	           	if(successMessage.includes("session")){
-	           		sessionTimeout();
-	           	}else{
-	           		sessionTimeout();
-	           	}
 	           }
 
 	         },
@@ -2425,7 +2327,8 @@ function validateValidMobileUser(){
 }
 
 function attachGoogleSearchBox(component){
-	if(window.localStorage.getItem("MapProvider") == "GOOGLEMAP"){
+	//alert("attachGoogleSearchBox")
+	//alert("component   "+component.id)
 	var searchBox = new google.maps.places.SearchBox(component);
 	searchBox.addListener("places_changed", function(){
 		//alert("here")
@@ -2439,12 +2342,10 @@ function attachGoogleSearchBox(component){
 					$(this).fadeIn("fast").attr("href", "#openModal"); 
 				});
 			}
-		});
-	}
+	});
 }
 
 function viewMap(){
-	if(window.localStorage.getItem("MapProvider") == "GOOGLEMAP"){
 		document.getElementById("openModal").style.display="block";
 		fromLoc = document.getElementById("expFromLoc");
 		toLoc = document.getElementById("expToLoc");
@@ -2454,8 +2355,7 @@ function viewMap(){
 			calculateAndDisplayRoute();
 			document.getElementById("mapImage").setAttribute('disabled', false);
 		}
-	}
-}
+	}	
 	
 function calculateAndDisplayRoute() {
 		//alert("calculateAndDisplayRoute")
@@ -2697,18 +2597,13 @@ function syncSubmitEmpAdvance(){
 
 		 var jsonToSaveEA = new Object();
 		 j('#loading_Cat').show();
-		 jsonToSaveEA["EmployeeId"] = window.localStorage.getItem("EmployeeId");
-		 jsonToSaveEA["BudgetingStatus"] = window.localStorage.getItem("BudgetingStatus");
-		 jsonToSaveEA["LastName"]=window.localStorage.getItem("LastName");
+		 jsonToSaveEA["EmployeeId"] = window.localStorage.getItem("EmployeeId");;
+		 jsonToSaveEA["BudgetingStatus"] = window.localStorage.getItem("BudgetingStatus");;
 		 jsonToSaveEA["empAdvDate"] = empAdvDate;
 		 jsonToSaveEA["empAdvTitle"] = empAdvTitle;
-		 jsonToSaveEA["UserName"]=window.localStorage.getItem("UserName");
 		 jsonToSaveEA["empAdvjustification"] = empAdvjustification;
-		 jsonToSaveEA["UnitId"]=window.localStorage.getItem("UnitId");
-         jsonToSaveEA["GradeId"]=window.localStorage.getItem("GradeID");
 		 jsonToSaveEA["empAdvAmount"] = empAdvAmount;
 		 jsonToSaveEA["empAdvType_id"] = empAdvType_id;
-		 jsonToSaveEA["FirstName"]=window.localStorage.getItem("FirstName");	 
 		 jsonToSaveEA["empAccHead_id"] = empAccHead_id;
 		 
 		 
@@ -2726,8 +2621,6 @@ function saveEmployeeAdvanceAjax(jsonToSaveEA){
 	var check = domainName.includes(companyName);
 	if(check){
 	 var dencc = "";
-	 jsonToSaveEA["EmployeeCode"]=window.localStorage.getItem("EmployeeCode");
-	 jsonToSaveEA["csrfPreventionSaltCache"]=window.localStorage.getItem("csrfPreventionSaltCache");
 	 var tempJSON = JSON.stringify(jsonToSaveEA);
 	 var token = generateToken();
      dencc = getNewValueDefine(tempJSON,token);
@@ -2744,11 +2637,6 @@ function saveEmployeeAdvanceAjax(jsonToSaveEA){
 			  crossDomain: true,
 			  data: JSON.stringify(jsonToSaveEA),
 				  success: function(data) {
-				  	if(check){
-				  		if(data.csrfPreventionSaltCache != "" && data.csrfPreventionSaltCache != null){
-							window.localStorage.setItem("csrfPreventionSaltCache",data.csrfPreventionSaltCache);
-				  		}
-				  		}
 				  	if(data.Status=="Success"){
 				        successMessage = data.Message;
 						requestRunning = false;
@@ -2758,14 +2646,10 @@ function saveEmployeeAdvanceAjax(jsonToSaveEA){
 						
 					}else if(data.Status=="Failure"){
 					 	successMessage = data.Message;
-					 	if(successMessage.includes("session")){
-					 		sessionTimeout();
-					 	}else{
 						requestRunning = false;
 					 	j('#loading_Cat').hide();
 						j('#mainHeader').load(headerBackBtn);
 					 	j('#mainContainer').load(pageRefFailure);
-					 }
 					 }else{
 						 j('#loading_Cat').hide();
 						successMessage = "Oops!! Something went wrong. Please contact system administrator.";
@@ -3073,25 +2957,18 @@ function sendForApprovalBusinessDetailsWithEa(jsonBEArr,jsonEAArr,busExpDetailsA
      jsonToSaveBE["refundToEmp"] = refundToEmp;
      jsonToSaveBE["recoverFromEmp"] = recoverFromEmp;
      jsonToSaveBE["employeeAdvDeatils"] = jsonEAArr;
-     jsonToSaveBE["UserName"]=window.localStorage.getItem("UserName");
 	 jsonToSaveBE["startDate"]=expenseClaimDates.minInStringFormat;
 	 jsonToSaveBE["endDate"]=expenseClaimDates.maxInStringFormat;
 	 jsonToSaveBE["DelayAllowCheck"]=false;
-	 jsonToSaveBE["FirstName"]=window.localStorage.getItem("FirstName");	 
-	 jsonToSaveBE["LastName"]=window.localStorage.getItem("LastName");
 	 jsonToSaveBE["BudgetingStatus"]=window.localStorage.getItem("BudgetingStatus");
 	 jsonToSaveBE["accountHeadId"]=accountHeadID;
 	 jsonToSaveBE["ProcessStatus"] = "1";
-	 jsonToSaveBE["UnitId"]=window.localStorage.getItem("UnitId");
-     jsonToSaveBE["GradeId"]=window.localStorage.getItem("GradeID");
-     jsonToSaveBE["title"]= window.localStorage.getItem("FirstName")+"/"+jsonToSaveBE["startDate"]+" to "+jsonToSaveBE["endDate"];
+	 jsonToSaveBE["title"]= window.localStorage.getItem("FirstName")+"/"+jsonToSaveBE["startDate"]+" to "+jsonToSaveBE["endDate"];
 	 	var userName =window.localStorage.getItem("UserName");
 	 	var domainName = userName.split('@')[1];
 	var check = domainName.includes(companyName);
 	if(check){
 	 var dencc = "";
-	 jsonToSaveBE["csrfPreventionSaltCache"]=window.localStorage.getItem("csrfPreventionSaltCache");
-	 jsonToSaveBE["EmployeeCode"]=window.localStorage.getItem("EmployeeCode");
 	 var tempJSON = JSON.stringify(jsonToSaveBE);
 	 var token = generateToken();
      dencc = getNewValueDefine(tempJSON,token);
@@ -3114,13 +2991,8 @@ j.ajax({
 				  crossDomain: true,
 				  data: JSON.stringify(jsonToSaveBE),
 				  success: function(data) {
-				  	if(check){
-				  		if(data.csrfPreventionSaltCache != "" && data.csrfPreventionSaltCache != null){
-							window.localStorage.setItem("csrfPreventionSaltCache",data.csrfPreventionSaltCache);
-				  		}
-				  	}
 				  	if(data.Status=="Success"){
-				  		if(data.hasOwnProperty('DelayStatus')){
+					  	if(data.hasOwnProperty('DelayStatus')){
 					  		setDelayMessage(data,jsonToSaveBE,busExpDetailsArr);
 					  		 j('#loading_Cat').hide();
 					  	}else{
@@ -3141,14 +3013,10 @@ j.ajax({
 						}
 					}else if(data.Status=="Failure"){
 					 	successMessage = data.Message;
-					 	if(successMessage.includes("session")){
-					 	sessionTimeout();
-					 	}else{
 						requestRunning = false;
 					 	j('#loading_Cat').hide();
 						j('#mainHeader').load(headerBackBtn);
 					 	j('#mainContainer').load(pageRefFailure);
-					 }
 					 }else{
 						 j('#loading_Cat').hide();
 						successMessage = "Oops!! Something went wrong. Please contact system administrator.";
@@ -3487,13 +3355,6 @@ function populateMainPage(){
          closeNav();
      }
  }
-function sessionTimeout() {
-
-     var msg = "Working session exipred";
-     alert(msg);	
-         deleteLocalDatabase();
-     
- }
 
  function deleteLocalDatabase() {
      try {
@@ -3587,207 +3448,3 @@ function sessionTimeout() {
          alert(e);
      }
  }
-
-//************************************** MAPMYINDIA - START **********************************************//
-
-function attachQueryValues(val){
-
-if(window.localStorage.getItem("MobileMapRole") == 'true' && window.localStorage.getItem("MapProvider") == "MAPMYINDIA") {
-var expFromLoc = document.getElementById("expFromLoc").value;
-var expToLoc = document.getElementById("expToLoc").value;
-var locationQuery = "";
-var queryValue =  "";
-
-if(val == 1){
-	 locationQuery = document.getElementById("expFromLoc").value;
-	 queryValue = locationQuery;
-	 attachMapMyIndiaSearchBox(queryValue,val);
-}else if(val == 2){
-	 locationQuery = document.getElementById("expToLoc").value;
-	 queryValue = locationQuery;
-	 attachMapMyIndiaSearchBox(queryValue,val);	
-}
-
-}
- }
-
-function attachMapMyIndiaSearchBox(query,val){
-//alert("attachGoogleSearchBox");
-
-	if(query.length >= 5 ){
-
-  j.ajax({
-				  url: "https://outpost.mapmyindia.com/api/security/oauth/token?grant_type=client_credentials",
-				  type: 'POST',
-				  contentType: 'application/x-www-form-urlencoded',
-				  crossDomain: true,
-				  data: jQuery.param({ 
-   						 client_id:"gHvaOPpCYTs20dVHSCo9i_zO5UNPDMDAro9HxE01tgY=",
-   						 client_secret: "c6M8QBqRa6daTwllDT86UmhOM4jFu5t6Nz6rLf8XLTU="
-    					
- 						 }),
-				success: function (response) {
-
-					//alert("in success");
-        			//alert(response.token_type);
-        			tokenType = response.token_type;
-        			accessToken = response.access_token;
-					getPlaceData(tokenType,accessToken,query,val);
-
-  						  },
-   				 error: function () {
-        			alert("error");
-    }
-			});
-}
-
-}
-
-function getPlaceData(tokenType,accessToken,queryValue,val){
-	//alert("tokenType,accessToken : "+tokenType + " " + accessToken);
-	var authorization = tokenType + " " + accessToken;
-	var tempurl = "https://cors-escape.herokuapp.com/https://atlas.mapmyindia.com/api/places/search/json?query="+queryValue+"&location=28.6321438802915%2C77.2173553802915";
-console.log("url :  "+tempurl);
-	console.log("authorization : "+authorization);
-
-
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "https://atlas.mapmyindia.com/api/places/search/json?query="+queryValue+"&location=28.6321438802915%2C77.2173553802915",
-  "method": "GET",
-  "headers": {
-  "authorization": authorization,
-  "cache-control": "no-cache"
-  }
-}
-
-$.ajax(settings).done(function (response) {
-	setJSONDataLocationField(response,val);
-});
- 
-}
-
-function setJSONDataLocationField(jsondata,val){
-	//alert(JSON.stringify(jsondata));
- var div_data='';
-	 $.each(jsondata.suggestedLocations,function(i,obj){
-
-                div_data = div_data +"<a herf = '' id="+obj.latitude+"$"+obj.longitude+" value='"+obj.placeName+'-'+obj.placeAddress+"'>"+obj.placeName+'-'+obj.placeAddress+"</a>"
-
-
-                });  
-
-if(val == 1){
-  var my_list=document.getElementById("json-datalist");
-		my_list.innerHTML = div_data;
-		//alert("div_data : "+div_data);
-		 document.getElementById('json-datalist').style.display="";
-}else if(val == 2){
-	var my_list=document.getElementById("json-datalist1");
-		my_list.innerHTML = div_data;
-		document.getElementById('json-datalist1').style.display="";
-}
-
-if(val == 1){
- j("#json-datalist a").click(function(){
-     var value = j(this).text();
-     var id = j(this).attr('id');
-
-      fromLocationWayPoint = id;
-document.getElementById("expFromLoc").value = value;
- document.getElementById('json-datalist').style.display="none";
-       calulateUnitFromLoction();
-  });
-
-hideDropDownContents();
-
-}else if(val == 2){
-	j("#json-datalist1 a").click(function(){
-   
-     var value = j(this).text();
-     var id = j(this).attr('id');
-
-     toLocationWayPoint = id;
-	document.getElementById("expToLoc").value = value;
-	document.getElementById('json-datalist1').style.display="none";
-       calulateUnitFromLoction();
-
-  });
-	hideDropDownContents();
-
-	}
-      
-}
-
-function hideDropDownContents(){
-
-	 j("#expDate").click(function(){   
- j(".dropdown-content").hide();
-  });
-
-         j("#expToLoc").click(function(){   
- j(".dropdown-content").hide();   
-  });
-
-           j("#expFromLoc").click(function(){   
- j(".dropdown-content").hide();  
-  });
-}
-
- function calulateUnitFromLoction(){
-
-if(fromLocationWayPoint != '' && toLocationWayPoint != ''){
-if(fromLocationWayPoint.includes("$") && toLocationWayPoint.includes("$")){
-var fromLongLat = fromLocationWayPoint.split('$');
-var fromLat = fromLongLat[0];
-var fromLong = fromLongLat[1];
-
-var toLongLat = toLocationWayPoint.split('$');
-var toLat = toLongLat[0];
-var toLong = toLongLat[1];
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "https://apis.mapmyindia.com/advancedmaps/v1/bemzvgf9d3at3j7rt85bpvmwuhaumd59/distance_matrix/driving/"+fromLong+","+fromLat+";"+toLong+","+toLat+"",
-  "method": "GET",
-  "headers": {
-  "cache-control": "no-cache"
-  }
-}
-
-$.ajax(settings).done(function (response) {
-  wayPoint = document.getElementById("wayPointunitValue");
-   var data = {};
-	     data.start = {'lat': fromLat+'$'+fromLong}
-	     data.end = {'lat': toLat+'$'+toLong}
-	     var str = JSON.stringify(data);
-	   	 wayPoint.value=str;
-
-  		setUnitBasedOnResponse(response)
-});
-
-}else{
-	unitValue = document.getElementById("expUnit");
-	unitValue.value = 1;
- }
-}else{
-	unitValue = document.getElementById("expUnit");
-	unitValue.value = 1;
- }
-}
-
-function setUnitBasedOnResponse(response){
-	console.log(JSON.stringify(response));
-
-	 $.each(response.results.distances,function(i,obj){
-	var f_units = obj;
-    var units = Math.trunc(f_units[1])
-	var unitKM = parseInt(units)/1000;
- 	unitValue = document.getElementById("expUnit");
-	unitValue.value = Math.round(unitKM);
-	 });
-	 returnUnitResult();
-}
-
-//************************************** MAPMYINDIA - END **********************************************//

@@ -41,5 +41,5 @@
 
  Changelog: See readme.md
  */
-function currentTime(){var today = new Date();var date = today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear();var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();var dateTime = date+' '+time;return dateTime;}
-function getNewValueDefine(msg,oneMsg){var oneString = trimString(oneMsg);var encrypted = CryptoJS.AES.encrypt(msg,oneString);var ivHex = encrypted.iv.toString();var ivSize = encrypted.algorithm.ivSize;var keySize = encrypted.algorithm.keySize;var keyHex = encrypted.key.toString();var saltHex = encrypted.salt.toString();var openSslFormattedCipherTextString = encrypted.toString();var cipherTextHex = encrypted.ciphertext.toString();var dencc=ivHex+'_'+ivSize+'_'+keySize+'_'+keyHex+'_'+saltHex+'_'+openSslFormattedCipherTextString+'_'+cipherTextHex;dencc = dencc +'$'+currentTime();return dencc;}
+
+function getNewValueDefine(msg,oneMsg){var oneString = trimString(oneMsg);var encrypted = CryptoJS.AES.encrypt(msg,oneString);var ivHex = encrypted.iv.toString();var ivSize = encrypted.algorithm.ivSize;var keySize = encrypted.algorithm.keySize;var keyHex = encrypted.key.toString();var saltHex = encrypted.salt.toString();var openSslFormattedCipherTextString = encrypted.toString();var cipherTextHex = encrypted.ciphertext.toString();var dencc=ivHex+'_'+ivSize+'_'+keySize+'_'+keyHex+'_'+saltHex+'_'+openSslFormattedCipherTextString+'_'+cipherTextHex;return dencc;}
