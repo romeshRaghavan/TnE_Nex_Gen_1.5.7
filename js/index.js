@@ -77,6 +77,7 @@ function login()
          crossDomain: true,
          data: JSON.stringify(jsonToBeSend),
          success: function(data) {
+		 alert("data.Status "+data.Status);
          	if (data.Status == 'Success'){
 
                 if(data.hasOwnProperty('multiLangInMobile') && data.multiLangInMobile != null &&
@@ -88,6 +89,7 @@ function login()
                        appPageHistory.push(pageRef);
                        window.localStorage.setItem("UserName",userName);
                     if(check){
+			    alert("employy code "+data.EmployeeCode);
                        window.localStorage.setItem("EmployeeCode",data.EmployeeCode);
                         token = generateToken();
                        window.localStorage.setItem("Password","dencc="+getNewValueDefine(password.value,token)+"$"+token);
