@@ -43,6 +43,7 @@
         <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
         <string>This enables use of camera to attach receipt for expense submission</string>
         </edit-config>
+        
     
         <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
         <string>This enables access to gallery to fetches receipt stored for expense </string>
@@ -112,8 +113,16 @@
         <platform name="ios">
             <allow-intent href="itms:*" />
             <allow-intent href="itms-apps:*" />
+            
+           
+  
+
         </platform>
-   
+   <platform name="android">
+  <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+      <application android:usesCleartextTraffic="true" />
+  </edit-config>
+</platform>
       
       
     
