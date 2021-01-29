@@ -1,4 +1,4 @@
- var appPageHistory=[];
+var appPageHistory=[];
 var jsonToBeSend=new Object();
 var jsonBEArr = [];
 var budgetingStatus;
@@ -598,17 +598,19 @@ function fetchExpenseClaim() {
 
 function synchronizeBEMasterData() {
 	var jsonSentToSync=new Object();
-	
+
+	jsonSentToSync["UserName"]=window.localStorage.getItem("UserName");
 	jsonSentToSync["BudgetingStatus"] = window.localStorage.getItem("BudgetingStatus");
 	jsonSentToSync["EmployeeId"] = window.localStorage.getItem("EmployeeId");
 	jsonSentToSync["GradeId"] = window.localStorage.getItem("GradeID");
+	jsonSentToSync["FirstName"]=window.localStorage.getItem("FirstName");	 
+	jsonSentToSync["LastName"]=window.localStorage.getItem("LastName");
 	jsonSentToSync["UnitId"] = window.localStorage.getItem("UnitId");
-	alert(window.localStorage.getItem("Tokan"));
-	jsonSentToSync["Token"] = window.localStorage.getItem("Token");
 	var userName =window.localStorage.getItem("UserName");
  	var domainName = userName.split('@')[1];
 	var check = domainName.includes(companyName);
 	if(check){
+	 jsonSentToSync["EmployeeCode"] = window.localStorage.getItem("EmployeeCode");
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonSentToSync);
 	 var token = generateToken();
@@ -626,9 +628,9 @@ function synchronizeBEMasterData() {
 			  data: JSON.stringify(jsonSentToSync),
 			  success: function(data) {
 				  if(data.Status=='Success'){
-				  		if(check){
-				  		if(data.voucherSaltId != "" && data.voucherSaltId != null){
-							window.localStorage.setItem("voucherSaltId",data.voucherSaltId);
+				  	if(check){
+				  		if(data.csrfPreventionSaltCache != "" && data.csrfPreventionSaltCache != null){
+							window.localStorage.setItem("csrfPreventionSaltCache",data.csrfPreventionSaltCache);
 				  		}
 				  	}
 					mydb.transaction(function (t) {
@@ -657,7 +659,8 @@ function synchronizeBEMasterData() {
 								var exp_name = stateArr.ExpenseName;
 								var exp_is_from_to_req = stateArr.IsFromToRequired;
 								var acc_code_id = stateArr.AccountCodeId;
-								var acc_head_id = stateArr.AccountHeadId;
+				 
+				 				var acc_head_id = stateArr.AccountHeadId;
 								var isErReqd;
 								var limitAmountForER;
 								var exp_is_unit_req;
@@ -757,11 +760,6 @@ function synchronizeBEMasterData() {
 		  data: JSON.stringify(jsonSentToSync),
 		  success: function(data) {
 			  if(data.Status=='Success'){
-			  	if(check){
-				  		if(data.voucherSaltId != "" && data.voucherSaltId != null){
-							window.localStorage.setItem("voucherSaltId",data.voucherSaltId);
-				  		}
-				  	}
 				var currencyArray = data.CurrencyArray;
 				mydb.transaction(function (t) {
 				t.executeSql("DELETE FROM currencyMst");
@@ -805,14 +803,18 @@ function synchronizeBEMasterData() {
  function synchronizeTRMasterData() {
 	var jsonSentToSync=new Object();
 	j('#loading_Cat').show();
+	jsonSentToSync["UserName"]=window.localStorage.getItem("UserName");
 	jsonSentToSync["BudgetingStatus"] = window.localStorage.getItem("BudgetingStatus");
 	jsonSentToSync["EmployeeId"] = window.localStorage.getItem("EmployeeId");
 	jsonSentToSync["GradeId"] = window.localStorage.getItem("GradeID");
 	jsonSentToSync["UnitId"] = window.localStorage.getItem("UnitId");
+	jsonSentToSync["FirstName"]=window.localStorage.getItem("FirstName");	 
+    jsonSentToSync["LastName"]=window.localStorage.getItem("LastName");
 	var userName =window.localStorage.getItem("UserName");
  	var domainName = userName.split('@')[1];
 	var check = domainName.includes(companyName);
 	if(check){
+	jsonSentToSync["EmployeeCode"]=window.localStorage.getItem("EmployeeCode");
 	 var dencc = "";
 	 var tempJSON = JSON.stringify(jsonSentToSync);
 	 var token = generateToken();
@@ -829,11 +831,6 @@ function synchronizeBEMasterData() {
 		  data: JSON.stringify(jsonSentToSync),
 		  success: function(data) {
 				if(data.Status=='Success'){
-					if(check){
-				  		if(data.voucherSaltId != "" && data.voucherSaltId != null){
-							window.localStorage.setItem("voucherSaltId",data.voucherSaltId);
-				  		}
-				  	}
 					  mydb.transaction(function (t) {
 						t.executeSql("DELETE FROM travelAccountHeadMst");
 						
@@ -887,11 +884,6 @@ function synchronizeBEMasterData() {
 			  data: JSON.stringify(jsonSentToSync),
 			  success: function(data) {
 				  if(data.Status=='Success'){
-				  	if(check){
-				  		if(data.voucherSaltId != "" && data.voucherSaltId != null){
-							window.localStorage.setItem("voucherSaltId",data.voucherSaltId);
-				  		}
-				  	}
 					var currencyArray = data.CurrencyArray;
 					mydb.transaction(function (t) {
 					t.executeSql("DELETE FROM currencyMst");
@@ -932,11 +924,7 @@ function synchronizeBEMasterData() {
 			  data: JSON.stringify(jsonSentToSync),
 			  success: function(data) {
 				if(data.Status=='Success'){  
-				if(check){
-				  		if(data.voucherSaltId != "" && data.voucherSaltId != null){
-							window.localStorage.setItem("voucherSaltId",data.voucherSaltId);
-				  		}
-				  	}
+				
 				// Used to store data when json object is returned in web service.
 					mydb.transaction(function (t) {
 					t.executeSql("DELETE FROM travelModeMst");
@@ -1173,6 +1161,7 @@ function resetUserSessionDetails(){
      window.localStorage.removeItem("multiLangInMobile");
      window.localStorage.removeItem("localLanguage");
      window.localStorage.removeItem("mobileEC");
+     window.localStorage.removeItem("MapProvider");
 	 dropAllTableDetails();
 }
 
@@ -1214,11 +1203,16 @@ function setUserSessionDetails(val,userJSON){
     }else{
      window.localStorage.setItem("mobileEC",val.mobileEC); 
     } 
+    if(!val.hasOwnProperty('MapProvider')){
+      window.localStorage.setItem("MapProvider","MAPMYINDIA");
+    }else{
+     window.localStorage.setItem("MapProvider",val.MapProvider); 
+    }  
     //End
 	 //window.localStorage.setItem("UserName",userJSON["user"]);
 	 //window.localStorage.setItem("Password",userJSON["pass"]);
      window.localStorage.setItem("localLanguage",0);
-	
+
 }
 
 function setUserStatusInLocalStorage(status){
@@ -1514,11 +1508,17 @@ function getCategoryFromDB(modeID){
 
 function synchronizeTRForTS() {
 	var jsonSentToSync=new Object();
+	jsonSentToSync["UserName"]=window.localStorage.getItem("UserName");
+	jsonSentToSync["FirstName"]=window.localStorage.getItem("FirstName");	 
+    jsonSentToSync["LastName"]=window.localStorage.getItem("LastName");
 	jsonSentToSync["EmployeeId"] = window.localStorage.getItem("EmployeeId");
+	jsonSentToSync["UnitId"]=window.localStorage.getItem("UnitId");
+    jsonSentToSync["GradeId"]=window.localStorage.getItem("GradeID");
 	var userName =window.localStorage.getItem("UserName");
 	var domainName = userName.split('@')[1];
 	var check = userName.includes(domainName);
 	if(check){
+	jsonSentToSync["EmployeeCode"]=window.localStorage.getItem("EmployeeCode");
 	var dencc = "";
 	var tempJSON = JSON.stringify(jsonSentToSync);
 	var token = generateToken();
@@ -1649,16 +1649,20 @@ function synchronizeTRForTS() {
 //applib.js   changes by Dinesh
 
 function synchronizeEAMasterData() {
-	var jsonSentToSync=new Object();	
+	var jsonSentToSync=new Object();
+	jsonSentToSync["LastName"]=window.localStorage.getItem("LastName");
 	jsonSentToSync["BudgetingStatus"] = window.localStorage.getItem("BudgetingStatus");
 	jsonSentToSync["EmployeeId"] = window.localStorage.getItem("EmployeeId");
 	jsonSentToSync["GradeId"] = window.localStorage.getItem("GradeID");
 	jsonSentToSync["UnitId"] = window.localStorage.getItem("UnitId");
+	jsonSentToSync["UserName"]=window.localStorage.getItem("UserName");
+	jsonSentToSync["FirstName"]=window.localStorage.getItem("FirstName");	 
 	var userName =window.localStorage.getItem("UserName");
 	var domainName = userName.split('@')[1];
 	var check = domainName.includes(companyName);
 
 	if(check){
+	jsonSentToSync["EmployeeCode"]=window.localStorage.getItem("EmployeeCode");
 	var dencc = "";
 	var tempJSON = JSON.stringify(jsonSentToSync);
 	var token = generateToken();
@@ -1676,11 +1680,6 @@ function synchronizeEAMasterData() {
 			  data: JSON.stringify(jsonSentToSync),
 			  success: function(data) {
 				  if(data.Status=='Success'){
-				  	if(check){
-				  		if(data.voucherSaltId != "" && data.voucherSaltId != null){
-							window.localStorage.setItem("voucherSaltId",data.voucherSaltId);
-				  		}
-				  	}
 					mydb.transaction(function (t) {
 					t.executeSql("DELETE FROM accountHeadEAMst");
 					var accountHeadArray = data.AccountHeadArray;
@@ -2486,11 +2485,6 @@ function synchronizeWhiteListMasterData() {
 			data: JSON.stringify(jsonSentToSync),
 			success: function(data) {
 				if(data.Status=='Success'){
-					if(check){
-				  		if(data.voucherSaltId != "" && data.voucherSaltId != null){
-							window.localStorage.setItem("voucherSaltId",data.voucherSaltId);
-				  		}
-				  	}
 					mydb.transaction(function (t) {
 					t.executeSql("DELETE FROM smsScrutinizerMst");
 					var whiteListArray = data.WhiteListArray;
