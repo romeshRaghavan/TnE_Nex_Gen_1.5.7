@@ -119,7 +119,7 @@
 
         </platform>
    <platform name="android">
-  <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+  <edit-config>
       <application android:usesCleartextTraffic="true" />
   </edit-config>
 </platform>
